@@ -27,9 +27,6 @@ Modern, interaktif ve gizli katılımcı özelliğine sahip bir çekiliş web uy
 - ⚡ **Modern Teknolojiler**: HTML5, CSS3, Vanilla JavaScript
 - 🎨 **Minimalist Arayüz**: Temiz ve kullanıcı dostu
 
-## 🚀 Demo
-
-Canlı demoyu görüntüleyin: [https://KULLANICI_ADINIZ.github.io/cekilis-sitesi/](https://KULLANICI_ADINIZ.github.io/cekilis-sitesi/)
 
 ## 🛠️ Teknolojiler
 
