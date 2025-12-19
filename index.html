@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çekiliş Sistemi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- GİZLİ PANEL (Sadece Yönetici Görür) -->
+        <div class="admin-panel">
+            <button id="toggleAdminBtn" class="admin-toggle">
+                <i class="fas fa-cog"></i> Yönetici Ayarları
+            </button>
+            
+            <div id="adminSection" class="admin-section">
+                <h3><i class="fas fa-user-secret"></i> Özel Katılımcılar (10 Kişi)</h3>
+                <p class="admin-note">Bu liste sadece siz görüyorsunuz. Kazanan bu 10 kişi arasından seçilecek.</p>
+                
+                <div class="admin-input">
+                    <input type="text" id="adminInput" placeholder="İsim girin...">
+                    <button id="adminAddBtn" class="btn-small">Ekle</button>
+                    <button id="adminRandomBtn" class="btn-small secondary">10 Rastgele Ekle</button>
+                </div>
+                
+                <div class="admin-list-container">
+                    <div class="admin-list-header">
+                        <span>Özel Liste <span id="adminCount">0/10</span></span>
+                        <button id="adminClearBtn" class="btn-small danger">Temizle</button>
+                    </div>
+                    <div id="adminList" class="admin-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANA EKRAN -->
+        <div id="mainScreen" class="main-screen">
+            <header>
+                <h1><i class="fas fa-gift"></i> ÇEKİLİŞ</h1>
+                <p class="subtitle">200 Katılımcı Arasından Kazananı Belirliyoruz</p>
+            </header>
+
+            <main>
+                <!-- KATILIMCI EKLEME BÖLÜMÜ -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-users"></i> Katılımcılar</h2>
+                        <div class="stats">
+                            <span id="participantCount">0/200</span>
+                            <div class="progress">
+                                <div id="progressBar" class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="text" id="participantInput" placeholder="Katılımcı ismi...">
+                        <button id="addBtn" class="btn primary">
+                            <i class="fas fa-plus"></i> Ekle
+                        </button>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <button id="add10Btn" class="btn secondary">10 Ekle</button>
+                        <button id="add50Btn" class="btn secondary">50 Ekle</button>
+                        <button id="fillAllBtn" class="btn secondary">Kalanı Doldur</button>
+                        <button id="clearBtn" class="btn danger">Temizle</button>
+                    </div>
+                    
+                    <div class="participants-grid" id="participantsGrid">
+                        <!-- Katılımcılar buraya gelecek -->
+                        <div class="empty-state">
+                            <i class="fas fa-user-plus"></i>
+                            <p>Henüz katılımcı yok. Yukarıdan ekleyin.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ÇEKİLİŞ BUTONU -->
+                <div class="section draw-section">
+                    <div class="requirements">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Çekilişi başlatmak için <strong>200 katılımcı</strong> eklemelisiniz.</p>
+                    </div>
+                    <button id="drawBtn" class="btn draw-btn" disabled>
+                        <i class="fas fa-play"></i> ÇEKİLİŞİ BAŞLAT
+                    </button>
+                </div>
+            </main>
+        </div>
+
+        <!-- ÇARK EKRANI -->
+        <div id="wheelScreen" class="wheel-screen">
+            <div class="wheel-header">
+                <button id="backBtn" class="btn back-btn">
+                    <i class="fas fa-arrow-left"></i> Geri
+                </button>
+                <h2>ÇEKİLİŞ CANLI!</h2>
+            </div>
+            
+            <div class="wheel-container">
+                <div class="wheel" id="wheel">
+                    <!-- Çark buraya gelecek -->
+                    <div class="wheel-center">
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="wheel-pointer"></div>
+            </div>
+            
+            <div class="wheel-controls">
+                <button id="spinBtn" class="btn spin-btn">
+                    <i class="fas fa-sync-alt"></i> ÇARKI DÖNDÜR
+                </button>
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">0s</span>
+                </div>
+            </div>
+            
+            <div class="result-section">
+                <h3><i class="fas fa-trophy"></i> Kazanan</h3>
+                <div id="winnerDisplay" class="winner-display">
+                    Çarkı döndürün...
+                </div>
+                <button id="showWinnerBtn" class="btn primary" style="display: none;">
+                    <i class="fas fa-crown"></i> Kazananı Göster
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KAZANAN MODALI -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="trophy">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2>TEBRİKLER!</h2>
+                <p>200 Katılımcı Arasından Seçildi</p>
+            </div>
+            
+            <div class="modal-body">
+                <div class="winner-name" id="winnerName">[Kazanan]</div>
+                <div class="winner-info">
+                    <div class="info-item">
+                        <i class="fas fa-calendar"></i>
+                        <span id="drawDate">Tarih</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>200 Katılımcı</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="closeModalBtn" class="btn">Tamam</button>
+                <button id="restartBtn" class="btn primary">Yeni Çekiliş</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
